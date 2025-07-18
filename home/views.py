@@ -31,7 +31,7 @@ def Register_view(request):
                     email = email,
                     username = username)
         
-        user.set_password(password)
+        user.set_password(password) # this will set automatically as encrypted formt like bcrypt.
         try:
 
             user.save()
@@ -48,11 +48,11 @@ def login_view(request):
     if request.method == "POST":
         username = request.POST.get('username')
         password = request.POST.get('password')
-
+        # authenticate is a built in method to verify that user have right credential or not.
         user = authenticate(username = username, password = password)
         print(user)
         if user is not None:
-            login(request, user)
+            login(request, user) # again login built in method
             print("User logged in successfully")
             return redirect('blogs')  # Redirect to home or dashboard
         else:
@@ -149,7 +149,7 @@ def about(request):
 
 # <------ classs based views ----->
 
-class SeeBlogs(View):
+class SeeBlogs(View): # view is a parent class
     def get(self, request):
         blogs = Blog.objects.all()
         print("This is class based view")
